@@ -1,0 +1,22 @@
+import  gitlab
+token="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"
+gl = gitlab.Gitlab('https://gitlab.com/', private_token = token)
+grup_id=gl.groups.list()
+for g_id in grup_id:
+    print("Group Name",g_id.attributes['name'])
+    print("-----------------------------------------")
+    my_users = g_id.members.list(as_list=False)
+    for user in my_users:
+        print(user)
+        print("Users in Group--->",user.attributes['name'])
+        if  user.attributes['access_level'] == 10:
+            print("User Permeation--->","Guest")
+        elif user.attributes['access_level'] == 20:
+            print("User Permeation--->", "Reporter")
+        elif user.attributes['access_level'] == 30:
+            print("User Permeation--->", "Developer")
+        elif user.attributes['access_level'] == 40:
+            print("User Permeation--->", "Maintainer")
+        elif user.attributes['access_level'] == 50:
+            print("User Permeation--->", "owner")
+    print("--------------------------------------------------------------------------")
